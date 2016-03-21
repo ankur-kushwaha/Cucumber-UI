@@ -1,0 +1,29 @@
+{
+  "Feature Name": {
+    "name": "Feature Name",
+    "description": "Feature Description asefasdfasdf",
+    "scenarios": [
+      {
+        "name": "Scenarion Name",
+        "steps": [
+          {
+            "desc": "Given I go on \"$url\""
+          },
+          {
+            "desc": "Then the title should equal \"$title\""
+          }
+        ]
+      }
+    ]
+  },
+  "f2": {
+    "name": "f2",
+    "description": "Feature Description",
+    "scenarios": [
+      {
+        "name": "Scenarion Name",
+        "steps": []
+      }
+    ]
+  }
+}

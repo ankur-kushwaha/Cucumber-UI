@@ -1,13 +1,13 @@
 var glob = require('glob')
 exports.config = {
 
-  specs: [    'e2e/features/*.feature'  ],
+  //specs: [    'e2e/features/*.feature'  ],
 
   capabilities: {
     'browserName': 'chrome'
   },
 
-  baseUrl: 'http://localhost:8081/',
+  //baseUrl: 'http://localhost:8081/',
   seleniumServerJar : glob.sync('./node_modules/protractor/selenium/selenium-server-standalone-*.jar').join(),
 	
   framework: 'custom',
@@ -15,7 +15,7 @@ exports.config = {
   
 
   cucumberOpts: {
-	   require: 'e2e/**/*.js',
+	  // require: 'e2e/**/*.js',
 	   // tags: '@dev',
 	   // format: undefined,
 	   // profile: false,

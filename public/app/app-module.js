@@ -14,7 +14,8 @@
       'ngSanitize',
       'xeditable',
       'ngAside',
-      'home'
+      'home',
+      'common'
     ])
     
     .run(function(editableOptions) {

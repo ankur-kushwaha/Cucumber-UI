@@ -4,5 +4,4 @@ Feature: Running Cucumber with Protractor
   to run my E2E tests
 
   Scenario: Wrapping WebDriver
-    Given I go on "index.html"
-    Then the title should equal "AngularJS — Superheroic JavaScript MVW Framework"
+    Given I go on "http://www.angularjs.org"

@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "glob": "^7.0.3",
+    "node-cmd": "^1.1.1",
     "path": "^0.12.7"
   }
 }
