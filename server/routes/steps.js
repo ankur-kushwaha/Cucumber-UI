@@ -21,20 +21,22 @@ router.post('/export', function(req, res, next) {
 var count = 0;
 function writeFile(feature) {
 
-	var data = 'Feature: ' + feature.name + "\n\n";
+	var data = 'Feature: ' + feature.name + "\n";
+	data=data+feature.description+"\n\n";
+	
 	feature.scenarios.forEach(function(scenario) {
 
 		data = data + 'Scenario: ' + scenario.name + "\n"
 
 		scenario.steps.forEach(function(line) {
-			data = data + line + "\n";
+			data = data + line.desc + "\n";
 		})
 		
 		data+="\n";
 
 	});
 
-	fs.writeFile("e2e/features/feature" + (count++) + ".feature", data, function(err) {
+	fs.writeFile("e2e/features/" +feature.name.replace(/ /g,'_')+ ".feature", data, function(err) {
 		if (err) {
 			return console.log(err);
 		}
@@ -48,7 +50,7 @@ function getSteps() {
 	var container = {
 		myFn : function(type, regExp, fn) {
 			console.log(type + ' ' + regExp.toString());
-			stepsArray.push(type + ' ' + regExp.toString());
+			stepsArray.push({desc:type + ' ' + regExp.toString()});
 		},
 
 		Given : function(regExp, fn) {
