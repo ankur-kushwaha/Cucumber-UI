@@ -19,7 +19,9 @@
     "protractor": "^3.1.1",
     "protractor-cucumber-framework": "^0.3.4"
   },
-  "dependencies": {},
+  "dependencies": {
+    "properties-reader": "0.0.15"
+  },
   "scripts": {
     "postinstall": "bower install -F",
     "prestart": "npm install",

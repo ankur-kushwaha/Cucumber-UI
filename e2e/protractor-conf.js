@@ -1,11 +1,13 @@
 var glob = require('glob')
+var config=require('./test-config.js')
+var PropertiesReader = require('properties-reader');
+var properties = PropertiesReader('test.properties');
+
 exports.config = {
 
   //specs: [    'e2e/features/*.feature'  ],
 
-  capabilities: {
-    'browserName': 'chrome'
-  },
+  capabilities: config.capabilities[properties.get('browser')],
 
   //baseUrl: 'http://localhost:8081/',
   seleniumServerJar : glob.sync('./node_modules/protractor/selenium/selenium-server-standalone-*.jar').join(),
@@ -15,7 +17,7 @@ exports.config = {
   
 
   cucumberOpts: {
-	  // require: 'e2e/**/*.js',
+	  require: 'features/**/*.js',
 	   // tags: '@dev',
 	   // format: undefined,
 	   // profile: false,
