@@ -1,7 +1,7 @@
 var glob = require('glob')
 var runConfig = require('jsonfile').readFileSync('./run-config.json'),config=require('./config.js');
 
-exports.config = {
+exports.config = { 
 
   //specs: [    'e2e/features/*.feature'  ],
 
