@@ -7,10 +7,13 @@
         "name": "Scenarion Name",
         "steps": [
           {
-            "desc": "Given I go on \"$url\""
+            "desc": "Given I go on \"http://angularjs.org\""
           },
           {
-            "desc": "Then the title should equal \"$title\""
+            "desc": "Then the title should equal \"AngularJS — Superheroic JavaScript MVW Fraework\""
+          },
+          {
+            "desc": "Given I go on \"http://www.weather.com/\""
           }
         ]
       }

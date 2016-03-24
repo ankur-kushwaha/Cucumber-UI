@@ -1,0 +1,4 @@
+{
+  "browser": "chrome",
+  "specs": "features/feature_name.feature"
+}

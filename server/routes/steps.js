@@ -6,8 +6,11 @@ var jsonfile = require('jsonfile')
 var express = require('express');
 var cmd=require('node-cmd');
 
-var router = express.Router();
+var router = express.Router(); 
 var file = "data/features.json";
+
+var runConfigFile='../e2e/run-config.json';
+var runConfig=jsonfile.readFileSync(runConfigFile);
 
 var features = jsonfile.readFileSync(file);
 
@@ -15,7 +18,7 @@ var features = jsonfile.readFileSync(file);
 router.get('/', function(req, res, next) {
 	// res.send('respond with a resource');
 	res.json({
-		steps : getSteps(),
+		steps : getSteps(), 
 		features : features
 	})
 });
@@ -27,24 +30,10 @@ router.post('/export', function(req, res, next) {
 	writeFile(feature);
 	features[feature.name] = feature;
 	jsonfile.writeFileSync(file, features, {
-		spaces : 2
+		spaces : 2 
 	})
 	res.json(feature);
 })
-
-router.get('/run',function(req,res,next){
-	var parentDir = path.resolve(process.cwd(), '..');
-	console.log(parentDir);
-	execute("gulp --cwd="+parentDir, function(stdout){
-		console.log(stdout);
-		res.send(stdout);
-	})
-})
-
-var exec = require('child_process').exec;
-function execute(command, callback){
-    exec(command, function(error, stdout, stderr){ callback(stdout); });
-};
 
 router.delete('/export',function(req,res,next){
 	var featureName=req.query.name;
@@ -54,6 +43,32 @@ router.delete('/export',function(req,res,next){
 	})
 	res.json(featureName);
 });
+ 
+router.get('/run',function(req,res,next){
+	
+	var browser=req.query.browser;
+	var specs=req.query.specs;
+	
+	runConfig.browser=browser||runConfig.browser;
+	//runConfig.specs=specs||runConfig.specs;
+	 
+	jsonfile.writeFile(runConfigFile, runConfig,{
+		spaces:2
+	},function (err) {
+		console.error(err)
+	})
+	
+	var parentDir = path.resolve(process.cwd(), '../e2e');
+	console.log(parentDir);
+	//res.json(1); 
+	execute("gulp --cwd="+parentDir, function(stdout){console.log(stdout);res.sendFile(parentDir+"/report/index.html");});
+})
+
+var exec = require('child_process').exec;
+function execute(command, callback){
+    exec(command, function(error, stdout, stderr){ callback(stdout); });
+};
+
 
 function writeFile(feature) {
 	var data = 'Feature: ' + feature.name + "\n";

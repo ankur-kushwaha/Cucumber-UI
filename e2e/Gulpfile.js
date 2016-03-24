@@ -1,7 +1,12 @@
 'use strict';
 
-var $, gulp = require('gulp'), config = require('./test-config');
+var $, gulp = require('gulp');
+
+var runConfig = require('jsonfile').readFileSync('./run-config.json'),config=require('./config.js');
+
 var protractorReport = require('gulp-protractor-cucumber-html-report');
+//var PropertiesReader = require('properties-reader');
+//var properties = PropertiesReader('test.properties');
 
 $ = require('gulp-load-plugins')({
 	pattern : [ 'gulp-*' ]
@@ -9,7 +14,7 @@ $ = require('gulp-load-plugins')({
 
 // run e2e tests - SERVER MUST BE RUNNING FIRST
 gulp.task('e2eTest', function() {
-	return gulp.src('e2e/features/*.feature').pipe($.protractor.protractor({
+	return gulp.src(runConfig.specs).pipe($.protractor.protractor({
 		configFile : 'protractor-conf.js'
 	})).on('error', function(e) {
 		console.log(e);

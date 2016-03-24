@@ -13,6 +13,7 @@
     "jade": "~1.11.0",
     "jsonfile": "^2.2.3",
     "morgan": "~1.6.1",
+    "properties-reader": "0.0.15",
     "serve-favicon": "~2.3.0"
   },
   "devDependencies": {
