@@ -1,4 +1,5 @@
-var outputDir = '../public/build/report/e2e';
+var path=require('path')
+var outputDir = path.join(process.cwd(),'../../client/build/report/e2e');
 var Cucumber=require('cucumber');
 var fs=require('fs');
 var myAfterHooks = function () {

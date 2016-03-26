@@ -86,7 +86,7 @@
 			vm.steps = res.data.steps;
 			vm.features=res.data.features;
 			vm.feature=vm.features[Object.keys(vm.features)[0]];
-			vm.showConf()
+			//vm.showConf()
 			
 		})
 

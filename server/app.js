@@ -21,8 +21,8 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, '../public/build/app/')));
-app.use(express.static(path.join(__dirname, '../public/build/report/')));
+app.use(express.static(path.join(__dirname, '../client/build/app/')));
+app.use(express.static(path.join(__dirname, '../client/build/report/')));
 
 //app.use('/', routes);
 app.use('/users', users);

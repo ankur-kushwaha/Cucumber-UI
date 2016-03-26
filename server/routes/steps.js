@@ -2,16 +2,18 @@ var fs = require('fs');
 var glob = require('glob');
 var path = require('path');
 var jsonfile = require('jsonfile') 
-
+var exec = require('child_process').exec;
+var spawn= require('child_process').spawn;
 var express = require('express');  
 var cmd=require('node-cmd'); 
   
 var router = express.Router();  
+
 var file = "data/features.json";
+var runConfigFile='e2e/run-config.json';
+var poFile="e2e/features/steps/po.json";
 
-var runConfigFile='../e2e/run-config.json';
 var runConfig=jsonfile.readFileSync(runConfigFile);
-
 var features = jsonfile.readFileSync(file);
 
 /* GET users listing. */
@@ -55,21 +57,18 @@ router.get('/run',function(req,res,next){
 	runConfig.specs=specs||runConfig.specs;
 	runConfig.feature=feature||runConfig.feature;
 	 
+	console.log(runConfig);
+	
 	jsonfile.writeFile(runConfigFile, runConfig,{
 		spaces:2
 	},function (err) {
 		console.error(err)
 	})
 	
-	var parentDir = path.resolve(process.cwd(), '..');
-	var e2eDir=parentDir+"/e2e"
-	var publicDir=parentDir+"/public"
 	
-	//res.json(1);  
-	execute("gulp --cwd="+e2eDir, function(stdout){console.log(stdout);res.redirect('/e2e')});
+	execute("gulp --cwd=e2e", function(stdout){console.log(stdout);res.redirect('/e2e')});
 })
 
-var poFile="../e2e/features/steps/po.json";
 router.get('/objects',function(req,res){
 	var po = jsonfile.readFileSync(poFile);
 	res.json(po);
@@ -85,7 +84,27 @@ router.post('/objects',function(req,res){
 	res.json(objects);
 })
 
-var exec = require('child_process').exec;
+router.get('/test',function(req,res){
+
+    var ls    =
+    	spawn('cmd', ['/s', '/c', '"gulp --cwd=e2e"'], { 
+    		  windowsVerbatimArguments: true
+    		});    	
+    	
+	ls.stdout.on('data', function (data) {    // register one or more handlers
+	  console.log('stdout: ' + data);
+	});
+
+	ls.stderr.on('data', function (data) {
+	  console.log('stderr: ' + data);
+	});
+
+	ls.on('exit', function (code) {
+	  console.log('child process exited with code ' + code);
+	  res.sendStatus(code);
+	});
+});
+
 function execute(command, callback){
     exec(command, function(error, stdout, stderr){ callback(stdout); });
 };
@@ -117,7 +136,6 @@ function getSteps() {
 				desc : type + ' ' + regExp.toString()
 			});
 		},
-
 		Given : function(regExp, fn) {
 			this.myFn('Given', regExp, fn);
 		},
@@ -128,10 +146,7 @@ function getSteps() {
 			this.myFn('When', regExp, fn);
 		}
 	};
-
-	var files = glob.sync('../e2e/features/steps/*.js');
-	console.log(files);
-
+	var files = glob.sync('e2e/features/steps/*.js');
 	files.forEach(function(file) {
 		console.log(file);
 		require(path.resolve(file)).apply(container);

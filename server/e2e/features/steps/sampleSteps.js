@@ -21,7 +21,6 @@ module.exports = function() {
 
   this.Then('the title should equal "$title"', function (title) {
     // Write code here that turns the phrase above into concrete actions
-	 console.log(browser.getT)
 	 return  expect(browser.getTitle()).to.eventually.equal(title);
   });
   
