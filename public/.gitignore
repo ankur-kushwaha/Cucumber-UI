@@ -13,7 +13,6 @@ ehthumbs.db
 node_modules
 report
 coverage
-build
 tmp
 
 # Log files

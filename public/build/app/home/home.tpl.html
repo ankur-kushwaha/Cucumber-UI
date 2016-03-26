@@ -1,0 +1,164 @@
+<div class=container-fluid>
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+
+			<a
+				class="navbar-brand"
+				href="#">Cucumber UI</a>
+			<form
+				class="navbar-form navbar-right"
+				role="search">
+				<div class="form-group">
+					Browser <select
+						class=form-control
+						ng-model="home.config.browser">
+						<option value="chrome">Chrome</option>
+						<option value="phantomjs">PhantomJs</option>
+
+					</select>
+				</div>
+
+			</form>
+		</div>
+	</nav>
+
+	<div class=row>
+
+		<div class="col-sm-3">
+			<!-- Feature list panel -->
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					Feature list <a ng-click="home.addNewFeature()"><span
+						class="glyphicon glyphicon-plus pull-right"
+						aria-hidden="true"></span></a>
+				</div>
+				<div class="list-group">
+					<a
+						href=""
+						class="list-group-item"
+						ng-class="{'active':feature==home.feature}"
+						ng-repeat="feature in home.features"
+						ng-click="home.feature=feature">{{feature.name}}
+
+						<button
+							type="button"
+							class="close"
+							ng-click="home.deleteFeature(feature)"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-9">
+			<!-- Feature name and description panel -->
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<span>{{ home.feature.name || 'empty' }}</span> <a
+						href=""
+						ng-click="home.runFeature(home.feature.name)"><span
+						class="glyphicon glyphicon-play-circle"
+						aria-hidden=true></span></a> <a
+						href=""
+						ng-click="home.upload(home.feature)"><span
+						class="glyphicon glyphicon-floppy-disk pull-right"
+						aria-hidden=true></span></a>
+				</div>
+				<div class="panel-body">
+
+					<a
+						href=""
+						editable-textarea="home.feature.description"
+						e-rows="7"
+						e-cols="100"> {{ home.feature.description || 'no description'
+						}} </a>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-6">
+					<!-- scenario panel -->
+
+
+					<div class="panel panel-default">
+						<div class="panel-heading clearfix">
+							<select
+								ng-model="home.scenarioSelected"
+								class="form-control"
+								ng-options="scenario as scenario.name for (idx,scenario) in home.feature.scenarios">
+								<option value="">-- Select Scenario--</option>
+							</select> <a
+								href=""
+								class="pull-right"
+								ng-click="home.addNewScenario()">Add New Scenario</a>
+						</div>
+						{{scenario=home.scenarioSelected;''}}
+						<div
+							class="panel-heading form-inline"
+							ng-show="home.scenarioSelected">
+
+							<a
+								href=""
+								editable-text="scenario.name"> {{ scenario.name || 'no
+								description' }}</a>
+							<a href="" class="text-danger pull-right" ng-click="home.deleteScenario(home.scenarioSelected)">Delete</a>
+						</div>
+						<ul
+							ng-show="home.scenarioSelected"
+							dnd-list="scenario.steps"
+							class="list-group">
+							<li
+								ng-repeat="step in scenario.steps"
+								class="list-group-item"
+								dnd-draggable="step"
+								dnd-moved="scenario.steps.splice($index, 1)"
+								dnd-effect-allowed="move"><a
+								ng-bind-html="step.desc"
+								editable-text="step.desc"></a>
+								<button
+									type="button"
+									class="close"
+									ng-click="home.scenarioSelected.steps.splice($index, 1)"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button></li>
+						</ul>
+					</div>
+
+				</div>
+				<div class="col-sm-6">
+					<div class="panel panel-default">
+						<div class=panel-heading>Available Steps</div>
+						<ul class="list-group">
+							<li
+								ng-repeat="step in home.steps"
+								class="list-group-item"
+								dnd-draggable="step"
+								dnd-effect-allowed="move">{{step.desc}}</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<button
+				class="btn btn-primary"
+				ng-click="home.upload(home.feature)">Save</button>
+			<button
+				class="btn btn-primary"
+				ng-click="home.showConf()">Page Objects</button>
+		</div>
+	</div>
+</div>
+<script
+	type="text/ng-template"
+	id="myModalContent.html">
+        <div class="modal-header">
+            <h3 class="modal-title">Create a New Feature file</h3>
+        </div>
+        <div class="modal-body form-inline">
+            Feature Name: <input type="text" class="form-control" ng-model=feature.name>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>

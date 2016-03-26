@@ -1,0 +1,1 @@
+{"version":3,"names":[],"mappings":"","sources":["app-routes.js"],"sourcesContent":["(function () {\r\n  'use strict';\r\n\r\n  angular\r\n    .module('polyAppSample')\r\n    .config(config);\r\n\r\n  function config($urlRouterProvider) {\r\n    $urlRouterProvider.otherwise('/home');\r\n  }\r\n}());\r\n"],"file":"app-routes.js","sourceRoot":"/source/"}
