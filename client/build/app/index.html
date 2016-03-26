@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.css">
 <link rel="stylesheet" href="vendor/angular-aside/dist/css/angular-aside.css">
 <link rel="stylesheet" href="vendor/angular-xeditable/dist/css/xeditable.css">
+<link rel="stylesheet" href="vendor/angular-toastr/dist/angular-toastr.css">
 <!-- endbower -->
 <!-- inject:css -->
 <link rel="stylesheet" href="css/common/common.css">
@@ -27,7 +28,8 @@
 	<div class='container-fluid'>
 		<div data-ui-view></div>
 	</div>
-
+<script src='/socket.io/socket.io.js'></script>
+        
 	<!-- bower:js -->
 	<script src="vendor/jquery/dist/jquery.js"></script>
 	<script src="vendor/angular/angular.js"></script>
@@ -38,10 +40,12 @@
 	<script src="vendor/angular-aside/dist/js/angular-aside.js"></script>
 	<script src="vendor/angular-sanitize/angular-sanitize.js"></script>
 	<script src="vendor/angular-xeditable/dist/js/xeditable.js"></script>
+	<script src="vendor/angular-toastr/dist/angular-toastr.tpls.js"></script>
 	<!-- endbower -->
 	<!-- inject:js -->
 	<script src="js/common/directives/directives-module.js"></script>
 	<script src="js/home/home-module.js"></script>
+	<script src="js/home/socket-factory.js"></script>
 	<script src="js/home/right-aside-controller.js"></script>
 	<script src="js/home/modal-instance-controller.js"></script>
 	<script src="js/home/home-routes.js"></script>

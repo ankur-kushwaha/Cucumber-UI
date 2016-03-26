@@ -10,9 +10,10 @@
 	 */
 	angular.module('home').controller('HomeCtrl', HomeCtrl);
 
-	function HomeCtrl($http, $aside,$uibModal,$log,$window) {
+	function HomeCtrl($http, $aside,$uibModal,$log,$window,Socket,toastr) {
 		var vm = this;
 		vm.ctrlName = 'HomeCtrl';
+		vm.showLogPanel=false;
 
 		this.toggleModal = function(){
 	        this.showModal = !this.showModal;
@@ -31,12 +32,25 @@
 	    vm.config={
 	    		browser:'phantomjs'
 	    };
+
 	    
 	    vm.runFeature=function(featureName){
+	    	vm.message='';
+	    	vm.showReport=false;
+	    	vm.showLogsPanel=true;
+	    
 	    	var browser=vm.config.browser;
 	    	
-	    	$window.open('/steps/run?browser='+browser+'&feature='+featureName,'_blank', 'width=800,height=600')
+	    	$http.get('/steps/run?browser='+browser+'&feature='+featureName); 
+	    	// $window.open('/steps/run?browser='+browser+'&feature='+featureName,'_blank',
+			// 'width=800,height=600')
 	    }
+	    Socket.on('message', function (data) {
+	    	vm.message=vm.message+data.message
+	    });
+	    Socket.on('exit', function (data) {
+	    	vm.showReport=true;
+	    });
 		
 		vm.addNewFeature=function(){
 			var modalInstance = $uibModal.open({
@@ -86,7 +100,7 @@
 			vm.steps = res.data.steps;
 			vm.features=res.data.features;
 			vm.feature=vm.features[Object.keys(vm.features)[0]];
-			//vm.showConf()
+			// vm.showConf()
 			
 		})
 
@@ -95,7 +109,7 @@
 					name : 'Enter Scenario Name',
 					steps : []
 			};
-			//vm.feature.scenarios.push(scenario); 
+			// vm.feature.scenarios.push(scenario);
 			
 			vm.scenarioSelected=scenario;
 			vm.upload(vm.feature);
@@ -107,6 +121,7 @@
 				feature : feature
 			}).then(function(res) {
 				console.log(res.data)
+				toastr.success('Feature saved!');
 			})
 		}
 		

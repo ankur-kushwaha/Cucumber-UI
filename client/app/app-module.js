@@ -14,6 +14,7 @@
       'ngSanitize',
       'xeditable',
       'ngAside',
+      'toastr',
       'home',
       'common'
     ])

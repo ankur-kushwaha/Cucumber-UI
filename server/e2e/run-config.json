@@ -1,5 +1,5 @@
 {
-  "browser": "phantomjs",
+  "browser": "chrome",
   "specs": "features/Feature_Name.feature",
   "feature": "Feature Name"
 }

@@ -1,3 +1,7 @@
+#logs .panel-body {
+  max-height: 400px;
+  overflow: auto;
+}
 ul {
   min-height: 50px;
 }

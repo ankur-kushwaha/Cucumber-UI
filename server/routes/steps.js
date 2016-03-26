@@ -57,7 +57,7 @@ router.get('/run',function(req,res,next){
 	runConfig.specs=specs||runConfig.specs;
 	runConfig.feature=feature||runConfig.feature;
 	 
-	console.log(runConfig);
+	// console.log(runConfig);
 	
 	jsonfile.writeFile(runConfigFile, runConfig,{
 		spaces:2
@@ -66,7 +66,28 @@ router.get('/run',function(req,res,next){
 	})
 	
 	
-	execute("gulp --cwd=e2e", function(stdout){console.log(stdout);res.redirect('/e2e')});
+	//execute("gulp --cwd=e2e", function(stdout){console.log(stdout);res.redirect('/e2e')});
+	var io=req.io;
+	var ls    =
+    	spawn('cmd', ['/s', '/c', '"gulp --cwd=e2e"'], { 
+    		  windowsVerbatimArguments: true
+    		});    	
+    	
+	ls.stdout.on('data', function (data) {    // register one or more handlers
+	  console.log('stdout: ' + data);
+	  io.emit('message', { message: ""+data });
+	});
+
+	ls.stderr.on('data', function (data) {
+	  console.log('stderr: ' + data);
+	});
+
+	ls.on('exit', function (code) {
+	  console.log('child process exited with code ' + code);
+	  io.emit('exit');
+	  res.sendStatus(code)
+	});
+	
 })
 
 router.get('/objects',function(req,res){
@@ -86,6 +107,8 @@ router.post('/objects',function(req,res){
 
 router.get('/test',function(req,res){
 
+	var io=req.io;
+	
     var ls    =
     	spawn('cmd', ['/s', '/c', '"gulp --cwd=e2e"'], { 
     		  windowsVerbatimArguments: true
@@ -93,6 +116,7 @@ router.get('/test',function(req,res){
     	
 	ls.stdout.on('data', function (data) {    // register one or more handlers
 	  console.log('stdout: ' + data);
+	  io.emit('message', { message: ""+data });
 	});
 
 	ls.stderr.on('data', function (data) {
@@ -101,7 +125,7 @@ router.get('/test',function(req,res){
 
 	ls.on('exit', function (code) {
 	  console.log('child process exited with code ' + code);
-	  res.sendStatus(code);
+	  res.redirect('/e2e');
 	});
 });
 
@@ -120,7 +144,7 @@ function writeFile(feature) {
 		})
 		data += "\n";
 	});
-	fs.writeFile("../e2e/features/" + feature.name.replace(/ /g, '_') + ".feature", data, function(err) {
+	fs.writeFile("e2e/features/" + feature.name.replace(/ /g, '_') + ".feature", data, function(err) {
 		if (err) {
 			return console.log(err);
 		}
@@ -131,7 +155,7 @@ function getSteps() {
 	var stepsArray = [];
 	var container = {
 		myFn : function(type, regExp, fn) {
-			console.log(type + ' ' + regExp.toString());
+			// console.log(type + ' ' + regExp.toString());
 			stepsArray.push({
 				desc : type + ' ' + regExp.toString()
 			});
@@ -148,7 +172,7 @@ function getSteps() {
 	};
 	var files = glob.sync('e2e/features/steps/*.js');
 	files.forEach(function(file) {
-		console.log(file);
+		// console.log(file);
 		require(path.resolve(file)).apply(container);
 	})
 	return stepsArray;

@@ -5,12 +5,22 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+
+var app = express();
+
+var port=3000;
+app.set('port', port);
+var http=require('http');
+var server = http.createServer(app);
+server.listen(port, function () {
+	  console.log('App started on 3000');
+});
+var io = require('socket.io').listen(server);
+ 
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var steps = require('./routes/steps');
 
-var app = express();
- 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -24,7 +34,12 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../client/build/app/')));
 app.use(express.static(path.join(__dirname, '../client/build/report/')));
 
-//app.use('/', routes);
+app.use('/',function(req,res,next){
+	//console.log(io);
+	req.io=io;
+	next();
+});
+
 app.use('/users', users);
 app.use('/steps', steps);
 
@@ -60,4 +75,3 @@ app.use(function(err, req, res, next) {
 });
 
 
-module.exports = app;

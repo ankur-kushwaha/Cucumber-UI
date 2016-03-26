@@ -17,8 +17,11 @@
 
 					</select>
 				</div>
-
+<button
+				class="btn btn-primary"
+				ng-click="home.showConf()">Page Objects</button>
 			</form>
+			
 		</div>
 	</nav>
 
@@ -139,15 +142,19 @@
 					</div>
 				</div>
 			</div>
-			<button
-				class="btn btn-primary"
-				ng-click="home.upload(home.feature)">Save</button>
-			<button
-				class="btn btn-primary"
-				ng-click="home.showConf()">Page Objects</button>
+			
 		</div>
 	</div>
+			<div class="panel panel-default" id="logs" ng-show="">
+				<div class="panel-heading">Running feature  <a href="/e2e" target="blank" ng-show="home.showReport">Show Report</a></div>
+				<div class="panel-body">
+					<pre>{{home.message}}</pre>
+				</div>
+			</div>
 </div>
+
+
+
 <script
 	type="text/ng-template"
 	id="myModalContent.html">

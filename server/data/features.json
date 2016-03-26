@@ -1,7 +1,7 @@
 {
   "Feature Name": {
     "name": "Feature Name",
-    "description": "Testing angularjs website",
+    "description": "Testing angularjs websites",
     "scenarios": [
       {
         "name": "Click testing",
