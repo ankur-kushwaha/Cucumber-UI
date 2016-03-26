@@ -1,0 +1,83 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		Global Page Objects
+		<div class="pull-right">
+			<a
+				href=""
+				ng-click="rightAside.addNewObject('global')"><span
+				class="glyphicon glyphicon-plus-sign"></span></a>
+		</div>
+	</div>
+	<div class=panel-body>
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th></th>
+					<th>Name</th>
+					<th>Type</th>
+					<th>Value</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="object in rightAside.objects.global">
+					<td><a href="" ng-click="rightAside.objects.global.splice($index,1)"><span class="glyphicon glyphicon-remove-circle text-danger"></span></a></td>
+					<td><a
+						href="#"
+						editable-text="object.name">{{ object.name || 'empty' }}</a></td>
+					<td><a
+						href=""
+						editable-select="object.type"
+						e-ng-options="type for type in rightAside.types"> {{
+							object.type }} </a></td>
+					<td><a
+						href="#"
+						editable-text="object.value">{{ object.value || 'empty' }}</a></td>
+				</tr>
+			</tbody>
+
+
+		</table>
+	</div>
+</div>
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		Page Objects(Feature: {{rightAside.featureName}})
+		<div class="pull-right">
+			<a
+				href=""
+				ng-click="rightAside.addNewObject(rightAside.featureName)"><span
+				class="glyphicon glyphicon-plus-sign"></span></a>
+		</div>
+	</div>
+	<div class=panel-body>
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th></th>
+					<th>Name</th>
+					<th>Type</th>
+					<th>Value</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="object in rightAside.objects[rightAside.featureName]">
+					<td><a href="" ng-click="rightAside.objects[rightAside.featureName].splice($index,1)"><span class="glyphicon glyphicon-remove-circle text-danger"></span></a></td>
+				
+					<td><a
+						href="#"
+						editable-text="object.name">{{ object.name || 'empty' }}</a></td>
+					<td><a
+						href=""
+						editable-select="object.type"
+						e-ng-options="type for type in rightAside.types"> {{
+							object.type }} </a></td>
+					<td><a
+						href="#"
+						editable-text="object.value">{{ object.value || 'empty' }}</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+

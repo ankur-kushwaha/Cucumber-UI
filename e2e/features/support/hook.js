@@ -1,4 +1,4 @@
-var outputDir = 'report/';
+var outputDir = '../public/build/report/e2e';
 var Cucumber=require('cucumber');
 var fs=require('fs');
 var myAfterHooks = function () {

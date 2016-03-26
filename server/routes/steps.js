@@ -1,12 +1,12 @@
 var fs = require('fs');
 var glob = require('glob');
 var path = require('path');
-var jsonfile = require('jsonfile')
+var jsonfile = require('jsonfile') 
 
-var express = require('express');
-var cmd=require('node-cmd');
-
-var router = express.Router(); 
+var express = require('express');  
+var cmd=require('node-cmd'); 
+  
+var router = express.Router();  
 var file = "data/features.json";
 
 var runConfigFile='../e2e/run-config.json';
@@ -47,10 +47,13 @@ router.delete('/export',function(req,res,next){
 router.get('/run',function(req,res,next){
 	
 	var browser=req.query.browser;
-	var specs=req.query.specs;
+	var feature=req.query.feature;
+	
+	var specs='features/'+feature.replace(/ /g, '_')+'.feature';
 	
 	runConfig.browser=browser||runConfig.browser;
-	//runConfig.specs=specs||runConfig.specs;
+	runConfig.specs=specs||runConfig.specs;
+	runConfig.feature=feature||runConfig.feature;
 	 
 	jsonfile.writeFile(runConfigFile, runConfig,{
 		spaces:2
@@ -58,10 +61,28 @@ router.get('/run',function(req,res,next){
 		console.error(err)
 	})
 	
-	var parentDir = path.resolve(process.cwd(), '../e2e');
-	console.log(parentDir);
-	//res.json(1); 
-	execute("gulp --cwd="+parentDir, function(stdout){console.log(stdout);res.sendFile(parentDir+"/report/index.html");});
+	var parentDir = path.resolve(process.cwd(), '..');
+	var e2eDir=parentDir+"/e2e"
+	var publicDir=parentDir+"/public"
+	
+	//res.json(1);  
+	execute("gulp --cwd="+e2eDir, function(stdout){console.log(stdout);res.redirect('/e2e')});
+})
+
+var poFile="../e2e/features/steps/po.json";
+router.get('/objects',function(req,res){
+	var po = jsonfile.readFileSync(poFile);
+	res.json(po);
+})
+
+router.post('/objects',function(req,res){
+	var objects=req.body.objects;
+	jsonfile.writeFile(poFile, objects,{
+		spaces:2
+	},function (err) {
+		console.error(err)
+	})
+	res.json(objects);
 })
 
 var exec = require('child_process').exec;

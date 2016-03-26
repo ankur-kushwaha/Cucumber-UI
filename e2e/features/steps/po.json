@@ -1,0 +1,16 @@
+{
+  "global": {
+    "Guide": {
+      "type": "linkText",
+      "name": "Guide",
+      "value": "Developer Guide"
+    }
+  },
+  "Feature Name": {
+    "Develop": {
+      "type": "linkText",
+      "name": "Develop",
+      "value": "Develop"
+    }
+  }
+}

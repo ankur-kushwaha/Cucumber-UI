@@ -1,31 +1,24 @@
 {
   "Feature Name": {
     "name": "Feature Name",
-    "description": "Feature Description asefasdfasdf",
+    "description": "Testing angularjs website",
     "scenarios": [
       {
-        "name": "Scenarion Name",
+        "name": "Click testing",
         "steps": [
           {
             "desc": "Given I go on \"http://angularjs.org\""
           },
           {
-            "desc": "Then the title should equal \"AngularJS — Superheroic JavaScript MVW Fraework\""
+            "desc": "Then User clicks on \"Develop\""
           },
           {
-            "desc": "Given I go on \"http://www.weather.com/\""
+            "desc": "Then User clicks on \"Guide\""
+          },
+          {
+            "desc": "Then the title should equal \"AngularJS: Developer Guide: Developer Guide\""
           }
         ]
-      }
-    ]
-  },
-  "f2": {
-    "name": "f2",
-    "description": "Feature Description",
-    "scenarios": [
-      {
-        "name": "Scenarion Name",
-        "steps": []
       }
     ]
   }
