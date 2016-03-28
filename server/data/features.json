@@ -4,19 +4,22 @@
     "description": "Testing angularjs websites",
     "scenarios": [
       {
-        "name": "Click testing",
+        "name": "Catalog testing",
         "steps": [
           {
-            "desc": "Given I go on \"http://angularjs.org\""
-          },
+            "fileName": "COMMON",
+            "type": "Given",
+            "step": "I go on \"http://angularjs.org\""
+          }
+        ]
+      },
+      {
+        "name": "angualr ui",
+        "steps": [
           {
-            "desc": "Then User clicks on \"Develop\""
-          },
-          {
-            "desc": "Then User clicks on \"Guide\""
-          },
-          {
-            "desc": "Then the title should equal \"AngularJS: Developer Guide: Developer Guide\""
+            "fileName": "COMMON",
+            "type": "Given",
+            "step": "I go on \"https://angular-ui.github.io/\""
           }
         ]
       }

@@ -18,7 +18,7 @@
     
     vm.featureName=featureName;
     
-    vm.types=['css','id','name','linkText'];
+    vm.types=['css','id','binding','model','name','linkText','partialLinkText','tagName','xpath'];
     
     $http.get('steps/objects',{
     }).then(function(res){

@@ -1,5 +1,9 @@
 {
   "browser": "chrome",
   "specs": "features/Feature_Name.feature",
-  "feature": "Feature Name"
+  "feature": "Feature Name",
+  "baseUrl": "",
+  "userName": "",
+  "password": "",
+  "scenarioName": ""
 }

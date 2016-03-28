@@ -9,7 +9,7 @@ module.exports = {
 	baseUrl : 'http://seller.snapdeal.com',
 	capabilities:{
 		chrome:{
-		    'browserName': 'chrome'
+		    'browserName': 'chrome' 
 		  },
 		  phantomjs:{
 			  'browserName': 'phantomjs',

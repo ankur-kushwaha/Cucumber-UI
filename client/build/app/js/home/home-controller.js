@@ -30,21 +30,29 @@
 	    }
 	    
 	    vm.config={
-	    		browser:'phantomjs'
+	    		browser:'chrome'
 	    };
 
 	    
 	    vm.runFeature=function(featureName){
-	    	vm.message='';
-	    	vm.showReport=false;
-	    	vm.showLogsPanel=true;
-	    
-	    	var browser=vm.config.browser;
-	    	
-	    	$http.get('/steps/run?browser='+browser+'&feature='+featureName); 
-	    	// $window.open('/steps/run?browser='+browser+'&feature='+featureName,'_blank',
-			// 'width=800,height=600')
-	    }
+	    	vm.upload(vm.feature).then(function(){
+		    	vm.message='';
+		    	vm.showReport=false;
+		    	vm.showLogsPanel=true;
+		    	var browser=vm.config.browser;
+		    	$http.get('/steps/run?browser='+browser+'&feature='+featureName); 
+		   	});
+	   	}
+	    vm.runScenario=function(scenarioName){
+	    	vm.upload(vm.feature).then(function(){
+		    	vm.message='';
+		    	vm.showReport=false;
+		    	vm.showLogsPanel=true;
+		    	var browser=vm.config.browser;
+		    	$http.get('/steps/run?browser='+browser+'&feature='+vm.feature.name+'&scenarioName='+scenarioName); 
+		   	});
+	   	}
+	   
 	    Socket.on('message', function (data) {
 	    	vm.message=vm.message+data.message
 	    });
@@ -117,7 +125,7 @@
 
 		vm.upload = function(feature) {
 			
-			$http.post('/steps/export', {
+			return $http.post('/steps/export', {
 				feature : feature
 			}).then(function(res) {
 				console.log(res.data)

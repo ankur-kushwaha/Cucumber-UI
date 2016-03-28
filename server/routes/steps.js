@@ -13,7 +13,6 @@ var file = "data/features.json";
 var runConfigFile='e2e/run-config.json';
 var poFile="e2e/features/steps/po.json";
 
-var runConfig=jsonfile.readFileSync(runConfigFile);
 var features = jsonfile.readFileSync(file);
 
 /* GET users listing. */
@@ -48,14 +47,17 @@ router.delete('/export',function(req,res,next){
  
 router.get('/run',function(req,res,next){
 	
+	var runConfig=jsonfile.readFileSync(runConfigFile);
 	var browser=req.query.browser;
 	var feature=req.query.feature;
+	var scenarioName=req.query.scenarioName;
 	
 	var specs='features/'+feature.replace(/ /g, '_')+'.feature';
 	
 	runConfig.browser=browser||runConfig.browser;
 	runConfig.specs=specs||runConfig.specs;
 	runConfig.feature=feature||runConfig.feature;
+	runConfig.scenarioName=scenarioName||'';
 	 
 	// console.log(runConfig);
 	
@@ -110,7 +112,7 @@ router.get('/test',function(req,res){
 	var io=req.io;
 	
     var ls    =
-    	spawn('cmd', ['/s', '/c', '"gulp --cwd=e2e"'], { 
+    	spawn('cmd', ['/s', '/c', '"gulp --gulpfile=e2e/Gulpfile.js"'], { 
     		  windowsVerbatimArguments: true
     		});    	
     	
@@ -140,7 +142,7 @@ function writeFile(feature) {
 	feature.scenarios.forEach(function(scenario) {
 		data = data + 'Scenario: ' + scenario.name + "\n"
 		scenario.steps.forEach(function(line) {
-			data = data + line.desc + "\n";
+			data = data + line.type+" "+line.step + "\n";
 		})
 		data += "\n";
 	});
@@ -153,11 +155,14 @@ function writeFile(feature) {
 
 function getSteps() {
 	var stepsArray = [];
+	var fileName='';
 	var container = {
 		myFn : function(type, regExp, fn) {
 			// console.log(type + ' ' + regExp.toString());
 			stepsArray.push({
-				desc : type + ' ' + regExp.toString()
+				fileName:fileName,
+				type:type,
+				step:regExp.toString()
 			});
 		},
 		Given : function(regExp, fn) {
@@ -172,7 +177,8 @@ function getSteps() {
 	};
 	var files = glob.sync('e2e/features/steps/*.js');
 	files.forEach(function(file) {
-		// console.log(file);
+		 fileName=file.replace('e2e/features/steps/','').replace('.js','').toUpperCase();
+		
 		require(path.resolve(file)).apply(container);
 	})
 	return stepsArray;

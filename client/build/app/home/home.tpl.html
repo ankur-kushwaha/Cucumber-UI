@@ -17,11 +17,11 @@
 
 					</select>
 				</div>
-<button
-				class="btn btn-primary"
-				ng-click="home.showConf()">Page Objects</button>
+				<button
+					class="btn btn-primary"
+					ng-click="home.showConf()">Page Objects</button>
 			</form>
-			
+
 		</div>
 	</nav>
 
@@ -53,6 +53,15 @@
 					</a>
 				</div>
 			</div>
+			
+			<div class="panel panel-default">
+				<div class="panel-heading">Scenarios <a ng-click="home.addNewScenario()"><span
+						class="glyphicon glyphicon-plus pull-right"
+						aria-hidden="true"></span></a></div>
+				<ul class="list-group" >
+					<li class="list-group-item" ng-init="home.scenario=home.feature.scenarios[0]" ng-class="{'active':home.scenario==scenario}" ng-click="home.scenario=scenario" ng-repeat="scenario in home.feature.scenarios">{{scenario.name}}</li>
+				</ul>
+			</div>
 		</div>
 		<div class="col-sm-9">
 			<!-- Feature name and description panel -->
@@ -62,7 +71,9 @@
 						href=""
 						ng-click="home.runFeature(home.feature.name)"><span
 						class="glyphicon glyphicon-play-circle"
-						aria-hidden=true></span></a> <a
+						aria-hidden=true></span></a>
+						
+						 <a
 						href=""
 						ng-click="home.upload(home.feature)"><span
 						class="glyphicon glyphicon-floppy-disk pull-right"
@@ -82,46 +93,41 @@
 				<div class="col-sm-6">
 					<!-- scenario panel -->
 
-
 					<div class="panel panel-default">
-						<div class="panel-heading clearfix">
-							<select
-								ng-model="home.scenarioSelected"
-								class="form-control"
-								ng-options="scenario as scenario.name for (idx,scenario) in home.feature.scenarios">
-								<option value="">-- Select Scenario--</option>
-							</select> <a
-								href=""
-								class="pull-right"
-								ng-click="home.addNewScenario()">Add New Scenario</a>
-						</div>
-						{{scenario=home.scenarioSelected;''}}
 						<div
 							class="panel-heading form-inline"
-							ng-show="home.scenarioSelected">
+							>
 
 							<a
 								href=""
-								editable-text="scenario.name"> {{ scenario.name || 'no
+								editable-text="home.scenario.name"> {{ home.scenario.name || 'no
 								description' }}</a>
-							<a href="" class="text-danger pull-right" ng-click="home.deleteScenario(home.scenarioSelected)">Delete</a>
+								
+						<a
+						href=""
+						ng-click="home.runScenario(home.scenario.name)"><span
+						class="glyphicon glyphicon-play-circle"
+						aria-hidden=true></span></a>
+						    <a
+								href=""
+								class="text-danger pull-right"
+								ng-click="home.deleteScenario(home.scenario)">Delete</a>
 						</div>
 						<ul
-							ng-show="home.scenarioSelected"
-							dnd-list="scenario.steps"
+							
+							dnd-list="home.scenario.steps"
 							class="list-group">
 							<li
-								ng-repeat="step in scenario.steps"
+								ng-repeat="step in home.scenario.steps"
 								class="list-group-item"
 								dnd-draggable="step"
-								dnd-moved="scenario.steps.splice($index, 1)"
-								dnd-effect-allowed="move"><a
-								ng-bind-html="step.desc"
-								editable-text="step.desc"></a>
+								dnd-moved="home.scenario.steps.splice($index, 1)"
+								dnd-effect-allowed="move">{{step.type}}<a
+								editable-text="step.step"> {{step.step}}</a>
 								<button
 									type="button"
 									class="close"
-									ng-click="home.scenarioSelected.steps.splice($index, 1)"
+									ng-click="home.scenario.steps.splice($index, 1)"
 									aria-label="Close">
 									<span aria-hidden="true">&times;</span>
 								</button></li>
@@ -130,27 +136,41 @@
 
 				</div>
 				<div class="col-sm-6">
-					<div class="panel panel-default">
+				<!-- available steps panel -->
+					<div class="panel panel-default" id="availableSteps">
 						<div class=panel-heading>Available Steps</div>
 						<ul class="list-group">
 							<li
 								ng-repeat="step in home.steps"
 								class="list-group-item"
 								dnd-draggable="step"
-								dnd-effect-allowed="move">{{step.desc}}</li>
+								dnd-effect-allowed="move"><span
+								class="label pull-right"
+								ng-class="{	'label-primary':step.fileName.length%3==0,
+											'label-info':step.fileName.length%3==1,
+											'label-success':step.fileName.length%3==2}">{{step.fileName}}</span> <span
+								class="label label-default">{{step.type}}</span> {{step.step}}</li>
 						</ul>
 					</div>
 				</div>
 			</div>
-			
+
 		</div>
 	</div>
-			<div class="panel panel-default" id="logs" ng-show="">
-				<div class="panel-heading">Running feature  <a href="/e2e" target="blank" ng-show="home.showReport">Show Report</a></div>
-				<div class="panel-body">
-					<pre>{{home.message}}</pre>
-				</div>
-			</div>
+	<div
+		class="panel panel-default"
+		id="logs"
+		ng-show="home.message">
+		<div class="panel-heading">
+			Running feature <a
+				href="/e2e"
+				target="blank"
+				ng-show="home.showReport">Show Report</a>
+		</div>
+		<div class="panel-body">
+			<pre>{{home.message}}</pre>
+		</div>
+	</div>
 </div>
 
 

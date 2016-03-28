@@ -6,8 +6,8 @@ var expect = chai.expect;
 var jsonfile = require('jsonfile')
 var path=require('path')
 var poFile=path.join(__dirname, 'po.json')
-var runConfigFile=path.join(__dirname, '../../run-config.json')
 var po=jsonfile.readFileSync(poFile);
+var runConfigFile=path.join(__dirname, '../../run-config.json')
 var runConfig=jsonfile.readFileSync(runConfigFile);
 var feature=runConfig.feature;
 
@@ -21,20 +21,8 @@ module.exports = function() {
 
   this.Then('the title should equal "$title"', function (title) {
     // Write code here that turns the phrase above into concrete actions
-	 return  expect(title).to.eventually.equal(browser.getTitle());
+	 return  expect(browser.getTitle()).to.eventually.equal(title);
   });
   
-  this.Then('User clicks on "$button"',function(button){
-	 var obj=po[feature][button]
-	 if(!obj){
-		 obj=po.global[button]
-	 }
-	 if(!obj){
-		 console.log('object not found in repository');
-	 }else{
-		 element(by[obj.type](obj.value)).click();
-	 }
-	  //element(by.css('[href="#/catalog/all"]')).click();
-	  //element(by[po[feature].type](po[feature].value))
-  })
+  
 }
