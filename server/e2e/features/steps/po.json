@@ -1,16 +1,32 @@
-{
-  "global": {
-    "Guide": {
-      "type": "linkText",
-      "name": "Guide",
-      "value": "Developer Guide"
-    }
+[
+  {
+    "name": "Global",
+    "objects": [
+      {
+        "type": "linkText",
+        "name": "Develop",
+        "value": "Develop"
+      }
+    ]
   },
-  "Feature Name": {
-    "Develop": {
-      "type": "linkText",
-      "name": "Develop",
-      "value": "Develop"
-    }
+  {
+    "name": "Guide",
+    "objects": [
+      {
+        "type": "linkText",
+        "name": "Guide",
+        "value": "Developer Guide"
+      }
+    ]
+  },
+  {
+    "name": "Tutorial",
+    "objects": [
+      {
+        "type": "linkText",
+        "name": "Tutorial",
+        "value": "Tutorial"
+      }
+    ]
   }
-}
+]

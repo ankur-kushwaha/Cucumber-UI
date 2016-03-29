@@ -1,83 +1,44 @@
-<div class="panel panel-default">
-	<div class="panel-heading">
-		Global Page Objects
-		<div class="pull-right">
-			<a
+<uib-accordion close-others="false"> 
+
+<uib-accordion-group
+	ng-repeat="pageObject in rightAside.pageObjects" ng-init="edit=''">
+	 <uib-accordion-heading>
+		  {{pageObject.name}}
+	 </uib-accordion-heading>
+	 <span editable-text="pageObject.name" e-form="edit">{{pageObject.name}}</span> <a href=""><span class="glyphicon glyphicon-edit" ng-click="edit.$show()" ng-show="pageObject.name.toLowerCase()!='global'" ng-hide="pageObject.name.toLowerCase()=='global' || edit.$visible" ></span></a>
+	 
+	 <a href="" ng-click="rightAside.pageObjects.splice($index,1)" class="pull-right" ng-show="pageObject.name.toLowerCase()!='global'">Delete page</a> 
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<th><a ng-click="rightAside.addNewObject($index)" href="">Add New</a></th>
+			<th>Name</th>
+			<th>Type</th>
+			<th>Value</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="object in pageObject.objects">
+			<td><a
 				href=""
-				ng-click="rightAside.addNewObject('global')"><span
-				class="glyphicon glyphicon-plus-sign"></span></a>
-		</div>
-	</div>
-	<div class=panel-body>
-		<table class="table table-bordered">
-			<thead>
-				<tr>
-					<th></th>
-					<th>Name</th>
-					<th>Type</th>
-					<th>Value</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="object in rightAside.objects.global">
-					<td><a href="" ng-click="rightAside.objects.global.splice($index,1)"><span class="glyphicon glyphicon-remove-circle text-danger"></span></a></td>
-					<td><a
-						href="#"
-						editable-text="object.name">{{ object.name || 'empty' }}</a></td>
-					<td><a
-						href=""
-						editable-select="object.type"
-						e-ng-options="type for type in rightAside.types"> {{
-							object.type }} </a></td>
-					<td><a
-						href="#"
-						editable-text="object.value">{{ object.value || 'empty' }}</a></td>
-				</tr>
-			</tbody>
-
-
-		</table>
-	</div>
-</div>
-
-<div class="panel panel-default">
-	<div class="panel-heading">
-		Page Objects(Feature: {{rightAside.featureName}})
-		<div class="pull-right">
-			<a
+				ng-click="pageObject.objects.splice($index,1)"><span
+					class="glyphicon glyphicon-remove-circle text-danger"></span></a></td>
+			<td><a
+				href="#"
+				editable-text="object.name">{{ object.name || 'empty' }}</a></td>
+			<td><a
 				href=""
-				ng-click="rightAside.addNewObject(rightAside.featureName)"><span
-				class="glyphicon glyphicon-plus-sign"></span></a>
-		</div>
-	</div>
-	<div class=panel-body>
-		<table class="table table-bordered">
-			<thead>
-				<tr>
-					<th></th>
-					<th>Name</th>
-					<th>Type</th>
-					<th>Value</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="object in rightAside.objects[rightAside.featureName]">
-					<td><a href="" ng-click="rightAside.objects[rightAside.featureName].splice($index,1)"><span class="glyphicon glyphicon-remove-circle text-danger"></span></a></td>
-				
-					<td><a
-						href="#"
-						editable-text="object.name">{{ object.name || 'empty' }}</a></td>
-					<td><a
-						href=""
-						editable-select="object.type"
-						e-ng-options="type for type in rightAside.types"> {{
-							object.type }} </a></td>
-					<td><a
-						href="#"
-						editable-text="object.value">{{ object.value || 'empty' }}</a></td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-</div>
+				editable-select="object.type"
+				e-ng-options="type for type in rightAside.types"> {{ object.type
+					}} </a></td>
+			<td><a
+				href="#"
+				editable-text="object.value">{{ object.value || 'empty' }}</a></td>
+		</tr>
+	</tbody>
 
+
+</table>
+
+</uib-accordion-group> </uib-accordion>
+<button class="btn btn-primary" ng-click="rightAside.addPage()">Add New Page</button>

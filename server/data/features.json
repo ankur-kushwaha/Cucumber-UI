@@ -4,22 +4,42 @@
     "description": "Testing angularjs websites",
     "scenarios": [
       {
-        "name": "Catalog testing",
+        "name": "Guide testing",
         "steps": [
           {
             "fileName": "COMMON",
             "type": "Given",
             "step": "I go on \"http://angularjs.org\""
+          },
+          {
+            "fileName": "COMMON",
+            "type": "Given",
+            "step": "the user moved to \"Guide\""
+          },
+          {
+            "fileName": "COMMON",
+            "type": "Then",
+            "step": "the title should equal \"AngularJS: Developer Guide: Developer Guide\""
           }
         ]
       },
       {
-        "name": "angualr ui",
+        "name": "Tutorial Testing",
         "steps": [
           {
             "fileName": "COMMON",
             "type": "Given",
-            "step": "I go on \"https://angular-ui.github.io/\""
+            "step": "I go on \"http://angularjs.org\""
+          },
+          {
+            "fileName": "COMMON",
+            "type": "Given",
+            "step": "the user moved to \"Tutorial\""
+          },
+          {
+            "fileName": "COMMON",
+            "type": "Then",
+            "step": "the title should equal \"AngularJS: Tutorial: Tutorial\""
           }
         ]
       }
