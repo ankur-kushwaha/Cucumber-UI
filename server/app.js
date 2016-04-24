@@ -8,12 +8,12 @@ var bodyParser = require('body-parser');
 
 var app = express();
 
-var port=3000;
+var port=4000;
 app.set('port', port);
 var http=require('http');
 var server = http.createServer(app);
 server.listen(port, function () {
-	  console.log('App started on 3000');
+	  console.log('App started on '+port);
 });
 var io = require('socket.io').listen(server);
  

@@ -29,17 +29,108 @@
           {
             "fileName": "COMMON",
             "type": "Given",
-            "step": "I go on \"http://angularjs.org\""
+            "step": "I go on non-angular \"http://127.0.0.1:8080/index2.html\""
+          },
+          {
+            "fileName": "FORM",
+            "type": "Then",
+            "step": "I fill in \"firstInputBox\" with \"test\""
+          },
+          {
+            "fileName": "FORM",
+            "type": "Then",
+            "step": "I fill in \"secondTextBox\" with \"test2\""
+          }
+        ]
+      }
+    ]
+  },
+  "test": {
+    "name": "test",
+    "description": "Feature Description",
+    "scenarios": [
+      {
+        "name": "Scenario Name",
+        "steps": [
+          {
+            "fileName": "COMMON",
+            "type": "Given",
+            "step": "I go on \"http://localhost:3000/#/register/detail/bank\""
           },
           {
             "fileName": "COMMON",
             "type": "Given",
-            "step": "the user moved to \"Tutorial\""
+            "step": "the user moved to \"BankDetails\""
           },
           {
-            "fileName": "COMMON",
+            "fileName": "FORM",
             "type": "Then",
-            "step": "the title should equal \"AngularJS: Tutorial: Tutorial\""
+            "step": "I fill in \"name\" with \"test\""
+          },
+          {
+            "fileName": "FORM",
+            "type": "Then",
+            "step": "\"submit\" should be disabled"
+          },
+          {
+            "fileName": "FORM",
+            "type": "Then",
+            "step": "I fill in \"accountNumber\" with \"1234\""
+          },
+          {
+            "fileName": "FORM",
+            "type": "Then",
+            "step": "I fill in \"confirmAccountNumber\" with \"1234\""
+          },
+          {
+            "fileName": "FORM",
+            "type": "Then",
+            "step": "I fill in \"ifscCode\" with \"AFDFD34434\""
+          },
+          {
+            "fileName": "CLICK",
+            "type": "Then",
+            "step": "User clicks on \"acceptCheckbox\""
+          },
+          {
+            "fileName": "CLICK",
+            "type": "Then",
+            "step": "User clicks on \"ifscmodal\""
+          },
+          {
+            "fileName": "FORM",
+            "type": "Given",
+            "step": "I select \"BANK 0\" from \"bankSelect\""
+          },
+          {
+            "fileName": "FORM",
+            "type": "Given",
+            "step": "I select \"CITY 0\" from \"citySelect\""
+          },
+          {
+            "fileName": "FORM",
+            "type": "Given",
+            "step": "I select \"Branch 0\" from \"branchSelect\""
+          },
+          {
+            "fileName": "CLICK",
+            "type": "Then",
+            "step": "User clicks on \"ifscCodeCheckbox\""
+          },
+          {
+            "fileName": "FORM",
+            "type": "Then",
+            "step": "\"ok\" should be enabled"
+          },
+          {
+            "fileName": "CLICK",
+            "type": "Then",
+            "step": "User clicks on \"ok\""
+          },
+          {
+            "fileName": "FORM",
+            "type": "Then",
+            "step": "\"submit\" should be enabled"
           }
         ]
       }

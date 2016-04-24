@@ -1,0 +1,71 @@
+[
+  {
+    "name": "BankDetails",
+    "objects": [
+      {
+        "type": "css",
+        "name": "name",
+        "value": "sd-input[name='beneficiaryName'] input"
+      },
+      {
+        "type": "css",
+        "name": "submit",
+        "value": ".button.btn-submit"
+      },
+      {
+        "type": "css",
+        "name": "accountNumber",
+        "value": "sd-input[name='accountNumber'] input"
+      },
+      {
+        "type": "css",
+        "name": "confirmAccountNumber",
+        "value": "sd-input[label='Confirm Account Number'] input"
+      },
+      {
+        "type": "css",
+        "name": "ifscCode",
+        "value": "sd-input[label='IFSC Code'] input"
+      },
+      {
+        "type": "css",
+        "name": "acceptCheckbox",
+        "value": "#checkTerms+label"
+      },
+      {
+        "type": "css",
+        "name": "ifscmodal",
+        "value": ".no-ifsc-msg"
+      },
+      {
+        "type": "model",
+        "name": "bankSelect",
+        "value": "Bank.bankName"
+      },
+      {
+        "type": "css",
+        "name": "citySelect",
+        "value": "select[label=\"City\"]"
+      },
+      {
+        "type": "css",
+        "name": "branchSelect",
+        "value": "select[label=\"Branch Name\"]"
+      },
+      {
+        "type": "css",
+        "name": "ifscCodeCheckbox",
+        "value": "#s0+label"
+      },
+      {
+        "type": "css",
+        "name": "ok",
+        "value": ".ifsc-modal button"
+      }
+    ]
+  },
+  {
+    "name": "Global",
+    "objects": []
+  }
+]

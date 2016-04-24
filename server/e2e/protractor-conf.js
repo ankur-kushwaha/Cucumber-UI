@@ -1,7 +1,7 @@
-var glob = require('glob')
+var glob = require('glob');
 var runConfig = require('jsonfile').readFileSync('./run-config.json'),config=require('./config.js');
 
-exports.config = { 
+exports.config = {
 
   //specs: [    'e2e/features/*.feature'  ],
 
@@ -9,12 +9,13 @@ exports.config = {
 
   //baseUrl: 'http://localhost:8081/',
   seleniumServerJar : glob.sync('./node_modules/protractor/selenium/selenium-server-standalone-*.jar').join(),
-	
+
   framework: 'custom',
   frameworkPath: require.resolve('protractor-cucumber-framework'),
   allScriptsTimeout: 500000,
   onPrepare:function(){
-	  if(runConfig.baseUrl.length!=0){
+
+	  if(runConfig.baseUrl.length!==0){
 	  browser.driver.get(runConfig.baseUrl);
 
 		browser.driver.findElement(by.id('pgLogin:navbar:txtUserName')).sendKeys(runConfig.userName);

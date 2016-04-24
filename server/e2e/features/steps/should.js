@@ -1,21 +1,18 @@
-var utils = require('./helper/utils');
 
 module.exports = function() {
- 
+
   this.Then('I should see "$elem"', function(elem) {
-    return utils.findElement(arg1);
+    return this.findElement(arg1);
   });
 
   this.Then('I should not see "$elem"', function(elem) {
-    var elements=utils.findElements(elem);
-    if(elements.count()==0){
-    	return 
+    var elements=this.findElements(elem);
+    if(elements.count()===0){
+    	return ;
     }else{
     	return new Error(elem+' Element found on page');
     }
   });
-
-  
 
   this.Then('I should see the alert "$alertText"', function(alertText, callback) {
     return driver.wait(function() {
@@ -33,9 +30,9 @@ module.exports = function() {
     });
   });
 
- 
 
-  
+
+
 
   /**
    * Spec: ".some-element-class" should have text "Some text"
@@ -44,7 +41,7 @@ module.exports = function() {
    * @params {string} arg2 Text to match
    */
   this.Then('"$elem" should have text "$text"', function(elem,text, callback) {
-    utils.findElement(elem).then(function(el) {
+    this.findElement(elem).then(function(el) {
       return el.getText();
     }).then(function(text) {
       assert.equal(text, text);
@@ -59,7 +56,7 @@ module.exports = function() {
    * @params {string} arg2 The text to match
    */
   this.Then('the "$elem" input should equal "$text"', function(elem,text, callback) {
-    utils.findInput(elem).then(function(input) {
+    this.findInput(elem).then(function(input) {
       return input.getAttribute('value');
     }).then(function(value) {
       assert.equal(value, text);

@@ -139,9 +139,19 @@
 				<!-- available steps panel -->
 					<div class="panel panel-default" id="availableSteps">
 						<div class=panel-heading>Available Steps</div>
+						<div class="panel-body">
+							<input type="text" placeholder="Search Steps" ng-model="searchText.step" class="form-control" />
+							<button
+							type="button"
+							class="close input"
+							ng-click="searchText.step=''"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						</div>
 						<ul class="list-group">
 							<li
-								ng-repeat="step in home.steps"
+								ng-repeat="step in home.steps|filter:searchText"
 								class="list-group-item"
 								dnd-draggable="step"
 								dnd-effect-allowed="move"><span

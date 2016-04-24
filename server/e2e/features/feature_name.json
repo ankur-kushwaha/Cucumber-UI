@@ -4,13 +4,13 @@
     "objects": [
       {
         "type": "linkText",
-        "name": "Develop",
-        "value": "Develop"
+        "name": "Guide",
+        "value": "Developer Guide"
       }
     ]
   },
   {
-    "name": "Guide",
+    "name": "Page1",
     "objects": [
       {
         "type": "linkText",
@@ -20,12 +20,12 @@
     ]
   },
   {
-    "name": "Tutorial",
+    "name": "Page2",
     "objects": [
       {
         "type": "linkText",
-        "name": "Tutorial",
-        "value": "Tutorial"
+        "name": "Guide",
+        "value": "Developer Guide"
       }
     ]
   }

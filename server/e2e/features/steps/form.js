@@ -1,12 +1,10 @@
-var utils = require('./helper/utils');
 
-var select = function(arg1, arg2, index, callback) {
-  return utils.findInput(arg2, index).then(function(select) {
-    return select.findElement(by.xpath('//option[text()="'+ arg1 +'"]'));
-  }).then(function(option) {
-    return option.click();
-  }).then(callback);
-};
+
+var chai = require('chai');
+var chaiAsPromised = require('chai-as-promised');
+
+chai.use(chaiAsPromised);
+var expect = chai.expect;
 
 
 module.exports = function() {
@@ -20,8 +18,9 @@ module.exports = function() {
    * @param string The text to input
    */
   this.Then('I fill in "$inputbox" with "$value"', function(inputbox,value) {
-    return utils.findElement(inputbox).clear().sendKeys(value).sendKeys(protractor.Key.TAB);
+    return this.findElement(inputbox).clear().sendKeys(value)//.sendKeys(protractor.Key.TAB);
   });
+
 
 
   /**
@@ -32,13 +31,22 @@ module.exports = function() {
    * @params {string} arg1 The options text
    * @params {string} arg2 The selector [id, css selectors, label text]
    */
-  this.Given('I select "$option" from "$select"', function(option,selectBox) {
-    select(option,selectBox);
+  this.Given('I select "$option" from "$select"', function(option,select) {
+	  //console.log(this.findElement(select));
+	  return this.findElement(select).$('[label="'+option+'"]').click();
   });
 
 
   this.Given('I check "$checkbox"', function(checkbox) {
-	  return utils.findElement(checkbox).click();
+	  return this.findElement(checkbox).click();
+  });
+  
+  this.Then('"$input" should be disabled', function(input) {
+	  return expect(this.findElement(input).getAttribute('disabled')).to.eventually.equal('true');
+  });
+  this.Then('"$input" should be enabled', function(input) {
+	  console.log(this.findElement(input));
+	  return expect(this.findElement(input).getAttribute('disabled')).to.eventually.equal(null);
   });
 
 };

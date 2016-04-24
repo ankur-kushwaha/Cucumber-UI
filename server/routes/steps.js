@@ -93,11 +93,16 @@ router.get('/run',function(req,res,next){
 })
 
 router.get('/objects',function(req,res){
+	var feature=req.query.feature;
+	var poFile="e2e/features/"+feature+".json";
 	var po = jsonfile.readFileSync(poFile);
 	res.json(po);
 })
 
 router.post('/objects',function(req,res){
+	var feature=req.query.feature;
+	var poFile="e2e/features/"+feature+".json";
+	
 	var objects=req.body.objects;
 	jsonfile.writeFile(poFile, objects,{
 		spaces:2

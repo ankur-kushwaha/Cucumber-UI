@@ -14,12 +14,15 @@
 		var vm = this;
 		vm.ctrlName = 'RightAsideCtrl';
 
-		vm.featureName = featureName;
+		vm.featureName = featureName.replace(" ","_").toLowerCase();
 
 		vm.types = [ 'css', 'id', 'binding', 'model', 'name', 'linkText', 'partialLinkText', 'tagName', 'xpath' ];
 
-		$http.get('steps/objects', {}).then(function(res) {
+		$http.get('steps/objects?feature='+vm.featureName).then(function(res) {
 			vm.pageObjects=res.data;
+		},function(){
+			console.log(1);
+			vm.pageObjects=[]
 		})
 
 		vm.addPage = function() {
@@ -38,48 +41,15 @@
 		}
 
 		vm.saveObjects = function() {
-			$http.post('steps/objects', {
+			$http.post('steps/objects?feature='+vm.featureName, {
 				objects : vm.pageObjects
 			}).then(function(res) {
-				console.log(res);
+
 			})
 		}
 
 		$scope.$on('modal.closing', function() {
-			console.log('closing')
 			vm.saveObjects();
 		})
-
-		vm.pageObjects = [ {
-			name : "Global",
-			objects : [ {
-				"type" : "linkText",
-				"name" : "Guide",
-				"value" : "Developer Guide"
-			} ]
-		}, {
-			name : "Page1",
-			objects : [ {
-				"type" : "linkText",
-				"name" : "Guide",
-				"value" : "Developer Guide"
-			} ]
-		}, {
-			name : "Page2",
-			objects : [ {
-				"type" : "linkText",
-				"name" : "Guide",
-				"value" : "Developer Guide"
-			} ]
-		} ];
-
-		vm.groups = [ {
-			title : 'Dynamic Group Header - 1',
-			content : 'Dynamic Group Body - 1'
-		}, {
-			title : 'Dynamic Group Header - 2',
-			content : 'Dynamic Group Body - 2'
-		} ];
-
 	}
 }());

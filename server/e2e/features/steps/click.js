@@ -1,4 +1,3 @@
-var utils = require('./helper/utils');
 
 /*
  * click.js
@@ -17,7 +16,7 @@ module.exports = function() {
 	 * @params {string} arg1 The specified button text
 	 */
 	this.Then('User clicks on link with text "$text"', function(text) {
-		return utils.findElement(text, 'linkText').click();
+		return this.findElement(text, 'linkText').click();
 	});
 
 	/**
@@ -30,7 +29,9 @@ module.exports = function() {
 	 *            arg1 The text to match
 	 */
 	this.Then('User clicks on "$elem"', function(elem) {
-		return utils.findElement(elem).click()
+		//$('input[type="checkbox"]+label').click();
+		//return browser.pause();
+		return this.findElement(elem).click();
 	});
 
 };
