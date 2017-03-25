@@ -10,7 +10,7 @@
    */
   angular.module('home').controller('HomeCtrl', HomeCtrl);
 
-  function HomeCtrl($http, $log, $window, Socket, toastr) {
+  function HomeCtrl($http, $log, $window, Socket, toastr, $uibModal) {
     var vm = this;
     vm.ctrlName = 'HomeCtrl';
     vm.showLogPanel = false;

@@ -12,7 +12,9 @@ module.exports = function (gulp, $, config) {
 
   // delete build directory
   gulp.task('clean', function () {
-    return $.del(config.buildDir);
+    return $.del(config.buildDir, {
+      force: true
+    });
   });
 
   // compile markup files and copy into build directory
@@ -105,7 +107,9 @@ module.exports = function (gulp, $, config) {
       .pipe($.inject(gulp.src([
           config.buildCss + '**/*',
           config.buildJs + '**/*'
-        ])
+        ], {
+          cwd: config.buildDir
+        })
         .pipe(jsFilter)
         .pipe($.angularFilesort())
         .pipe(jsFilter.restore), {
@@ -175,7 +179,8 @@ module.exports = function (gulp, $, config) {
           config.extDir + 'vendor*.css',
           config.extDir + 'vendor*.js'
         ], {
-          read: false
+          read: false,
+          cwd: config.buildDir
         }), {
           starttag: '<!-- bower:{{ext}} -->',
           endtag: '<!-- endbower -->',
@@ -274,7 +279,7 @@ module.exports = function (gulp, $, config) {
     }
 
     gulp.src([config.buildDir + '**/*.html'])
-      .pipe(gulp.dest('tmp/' + config.buildDir))
+      .pipe(gulp.dest(config.buildDir + "tmp/"))
       .on('end', function () {
         $.del([
             config.buildDir + '*',
@@ -285,7 +290,8 @@ module.exports = function (gulp, $, config) {
             '!' + config.extDir,
             '!' + config.buildDir + 'index.html'
           ], {
-            mark: true
+            mark: true,
+            force: true
           })
           .then(function () {
             cb();

@@ -1,8 +1,9 @@
 'use strict';
 
+var path = require('path');
 var outDir = 'build/';
-
-var reportDir=outDir+"report/";
+var outAppDir = path.join(__dirname, "..", "server/static/");
+var reportDir = outDir + "report/";
 
 module.exports = {
   host: 'localhost',
@@ -18,18 +19,19 @@ module.exports = {
   buildTestDir: outDir + 'test/',
 
   // build directories
-  buildDir: outDir + 'app/',
-  buildCss: outDir + 'app/css/',
-  buildFonts: outDir + 'app/fonts/',
-  buildImages: outDir + 'app/images/',
-  buildJs: outDir + 'app/js/',
-  extDir: outDir + 'app/vendor/',
-  extCss: outDir + 'app/vendor/css/',
-  extFonts: outDir + 'app/vendor/fonts/',
-  extJs: outDir + 'app/vendor/js/',
-  
+
+  buildDir: outAppDir,
+  buildCss: outAppDir + 'css/',
+  buildFonts: outAppDir + 'fonts/',
+  buildImages: outAppDir + 'images/',
+  buildJs: outAppDir + 'js/',
+  extDir: outAppDir + 'vendor/',
+  extCss: outAppDir + 'vendor/css/',
+  extFonts: outAppDir + 'vendor/fonts/',
+  extJs: outAppDir + 'vendor/js/',
+
   //Report directories
-  coverageReportDir:reportDir+'coverage/',
-  analysisReportDir:reportDir+'analysis/',
-  junitDir:reportDir+'junit/'
+  coverageReportDir: reportDir + 'coverage/',
+  analysisReportDir: reportDir + 'analysis/',
+  junitDir: reportDir + 'junit/'
 };
