@@ -3,27 +3,31 @@
 module.exports = function (gulp, $, config) {
   // lint source code
   gulp.task('lint', function () {
-    var jsFilter = $.filter('**/*.js', {restore: true});
+    var jsFilter = $.filter('**/*.js', {
+      restore: true
+    });
 
     return gulp.src([
-      config.appScriptFiles,
-      config.e2eFiles,
-      config.unitTestFiles
-    ])
-      .pipe($.plumber({errorHandler: function (err) {
-        $.notify.onError({
-          title: 'Error linting at ' + err.plugin,
-          subtitle: ' ', //overrides defaults
-          message: err.message.replace(/\u001b\[.*?m/g, ''),
-          sound: ' ' //overrides defaults
-        })(err);
+        config.appScriptFiles,
+        config.e2eFiles,
+        config.unitTestFiles
+      ])
+      .pipe($.plumber({
+        errorHandler: function (err) {
+          $.notify.onError({
+            title: 'Error linting at ' + err.plugin,
+            subtitle: ' ', //overrides defaults
+            message: err.message.replace(/\u001b\[.*?m/g, ''),
+            sound: ' ' //overrides defaults
+          })(err);
 
-        this.emit('end');
-      }}))
+          this.emit('end');
+        }
+      }))
       .pipe(jsFilter)
-      //.pipe($.eslint())
-      //.pipe($.eslint.formatEach('./node_modules/eslint-path-formatter'))
-      //.pipe($.eslint.failOnError())
+      // .pipe($.eslint())
+      // .pipe($.eslint.formatEach('./node_modules/eslint-path-formatter'))
+      // .pipe($.eslint.failOnError())
       .pipe($.jshint())
       .pipe($.jshint.reporter('jshint-stylish'))
       .pipe($.jshint.reporter('fail'))
@@ -43,7 +47,7 @@ module.exports = function (gulp, $, config) {
       });
 
       if (matches.length > 0) {
-        $.plato.inspect(matches,config.analysisReportDir, {}, function () {
+        $.plato.inspect(matches, './report', {}, function () {
           done();
         });
       } else {
@@ -52,5 +56,5 @@ module.exports = function (gulp, $, config) {
     });
   });
 
-  gulp.task('analyze', ['staticAnalysis']);
+  gulp.task('analyze', []);
 };

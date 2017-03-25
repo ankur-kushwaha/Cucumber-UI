@@ -1,27 +1,27 @@
 'use strict';
 
-var _ = require('lodash')
-  , buildConfig = require('./build.config')
-  , config = {}
-  , gulp = require('gulp')
-  , gulpFiles = require('require-dir')('./gulp')
-  , path = require('path')
-  , $, key;
+var _ = require('lodash'),
+  buildConfig = require('./build.config'),
+  config = {},
+  gulp = require('gulp'),
+  gulpFiles = require('require-dir')('./gulp'),
+  path = require('path'),
+  $, key;
 
 $ = require('gulp-load-plugins')({
   pattern: [
-  'browser-sync',
-  'del',
-  'gulp-*',
-  'karma',
-  'main-bower-files',
-  'multi-glob',
-  'plato',
-  'run-sequence',
-  'streamqueue',
-  'uglify-save-license',
-  'wiredep',
-  'yargs'
+    'browser-sync',
+    'del',
+    'gulp-*',
+    'karma',
+    'main-bower-files',
+    'multi-glob',
+    'plato',
+    'run-sequence',
+    'streamqueue',
+    'uglify-save-license',
+    'wiredep',
+    'yargs'
   ]
 });
 
@@ -54,7 +54,7 @@ for (key in gulpFiles) {
 }
 
 gulp.task('dev', ['build'], function () {
-  //gulp.start('browserSync');
+  // gulp.start('browserSync');
   gulp.start('watch');
 });
 

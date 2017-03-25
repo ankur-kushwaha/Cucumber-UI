@@ -1,9 +1,9 @@
 {
   "browser": "chrome",
-  "specs": "features/test.feature",
-  "feature": "test",
+  "specs": "features/Feature_Name.feature",
+  "feature": "Feature Name",
   "baseUrl": "",
   "userName": "",
   "password": "",
-  "scenarioName": ""
+  "scenarioName": "Guide testing"
 }

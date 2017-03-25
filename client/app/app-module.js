@@ -5,21 +5,20 @@
    * @name polyAppSample
    * @description
    *
-   */ 
-  angular  
+   */
+  angular
     .module('polyAppSample', [
       'ui.router',
       'ui.bootstrap',
-      'dndLists', 
+      'dndLists',
       'ngSanitize',
       'xeditable',
-      'ngAside',
       'toastr',
       'home',
       'common'
     ])
-    
-    .run(function(editableOptions) {
-    	  editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
-    	});
+
+  .run(function (editableOptions) {
+    editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
+  });
 }());

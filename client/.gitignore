@@ -30,4 +30,4 @@ logs
 pids
 *.pid
 *.seed
-/build/
+build

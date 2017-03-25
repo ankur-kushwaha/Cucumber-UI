@@ -1,10 +1,11 @@
 'use strict';
 
-var _ = require('underscore.string')
-  , fs = require('fs')
-  , path = require('path')
+var _ = require('underscore.string'),
+  fs = require('fs'),
+  path = require('path')
 
-  , bowerDir = JSON.parse(fs.readFileSync('.bowerrc')).directory + path.sep;
+  ,
+  bowerDir = JSON.parse(fs.readFileSync('.bowerrc')).directory + path.sep;
 
 module.exports = function (gulp, $, config) {
   var isProd = $.yargs.argv.stage === 'prod';
@@ -17,26 +18,28 @@ module.exports = function (gulp, $, config) {
   // compile markup files and copy into build directory
   gulp.task('markup', ['clean'], function () {
     return gulp.src([
-      config.appMarkupFiles
-    ])
+        config.appMarkupFiles
+      ])
       .pipe(gulp.dest(config.buildDir));
   });
 
   // compile styles and copy into build directory
   gulp.task('styles', ['clean'], function () {
     return gulp.src([
-      config.appStyleFiles
-    ])
-      .pipe($.plumber({errorHandler: function (err) {
-        $.notify.onError({
-          title: 'Error linting at ' + err.plugin,
-          subtitle: ' ', //overrides defaults
-          message: err.message.replace(/\u001b\[.*?m/g, ''),
-          sound: ' ' //overrides defaults
-        })(err);
+        config.appStyleFiles
+      ])
+      .pipe($.plumber({
+        errorHandler: function (err) {
+          $.notify.onError({
+            title: 'Error linting at ' + err.plugin,
+            subtitle: ' ', //overrides defaults
+            message: err.message.replace(/\u001b\[.*?m/g, ''),
+            sound: ' ' //overrides defaults
+          })(err);
 
-        this.emit('end');
-      }}))
+          this.emit('end');
+        }
+      }))
       .pipe($.less())
       .pipe($.autoprefixer())
       .pipe($.if(isProd, $.cssRebaseUrls()))
@@ -44,15 +47,7 @@ module.exports = function (gulp, $, config) {
         modify: function (url) {
           // determine if url is using http, https, or data protocol
           // cssRebaseUrls rebases these URLs, too, so we need to fix that
-          var beginUrl = url.indexOf('http:');
-          if (beginUrl < 0) {
-            beginUrl = url.indexOf('https:');
-          }
-          if (beginUrl < 0) {
-            beginUrl = url.indexOf('data:');
-          }
-
-          if (beginUrl > -1) {
+          if (url.indexOf('http:') > -1 || url.indexOf('https:') > -1 || url.indexOf('data:') > -1) {
             return url.substring(beginUrl, url.length);
           }
 
@@ -68,15 +63,19 @@ module.exports = function (gulp, $, config) {
 
   // compile scripts and copy into build directory
   gulp.task('scripts', ['clean', 'analyze', 'markup'], function () {
-    var htmlFilter = $.filter('**/*.html', {restore: true})
-      , jsFilter = $.filter('**/*.js', {restore: true});
+    var htmlFilter = $.filter('**/*.html', {
+        restore: true
+      }),
+      jsFilter = $.filter('**/*.js', {
+        restore: true
+      });
 
     return gulp.src([
-      config.appScriptFiles,
-      config.buildDir + '**/*.html',
-      '!**/*_test.*',
-      '!**/index.html'
-    ])
+        config.appScriptFiles,
+        config.buildDir + '**/*.html',
+        '!**/*_test.*',
+        '!**/index.html'
+      ])
       .pipe($.sourcemaps.init())
       .pipe($.if(isProd, htmlFilter))
       .pipe($.if(isProd, $.ngHtml2js({
@@ -98,7 +97,9 @@ module.exports = function (gulp, $, config) {
 
   // inject custom CSS and JavaScript into index.html
   gulp.task('inject', ['markup', 'styles', 'scripts'], function () {
-    var jsFilter = $.filter('**/*.js', {restore: true});
+    var jsFilter = $.filter('**/*.js', {
+      restore: true
+    });
 
     return gulp.src(config.buildDir + 'index.html')
       .pipe($.inject(gulp.src([
@@ -110,25 +111,38 @@ module.exports = function (gulp, $, config) {
         .pipe(jsFilter.restore), {
           addRootSlash: false,
           ignorePath: config.buildDir
-        })
-      )
+        }))
       .pipe(gulp.dest(config.buildDir));
   });
 
   // copy bower components into build directory
   gulp.task('bowerCopy', ['inject'], function () {
-    var cssFilter = $.filter('**/*.css', {restore: true}),
-    lessFilter = $.filter('**/*.less', {restore: true})
-      , jsFilter = $.filter('**/*.js', {restore: true});
+    var cssFilter = $.filter('**/*.css', {
+        restore: true
+      }),
+      jsFilter = $.filter('**/*.js', {
+        restore: true
+      });
 
-    return gulp.src($.mainBowerFiles(), {base: bowerDir})
-    .pipe(lessFilter)
-    .pipe($.less())
-    .pipe(lessFilter.restore)
-    .pipe(cssFilter)
+    return gulp.src($.mainBowerFiles({
+        overrides: {
+          'bootstrap': {
+            main: ["dist/css/bootstrap.css",
+              "dist/js/bootstrap.js"
+            ]
+          }
+        }
+      }), {
+        base: bowerDir
+      })
+      .pipe(cssFilter)
       .pipe($.if(isProd, $.modifyCssUrls({
         modify: function (url, filePath) {
-          if (url.indexOf('http') !== 0 && url.indexOf('data:') !== 0) {
+          if (url.indexOf('data:') === 0) {
+            return url;
+          }
+
+          if (url.indexOf('http') !== 0) {
             filePath = path.dirname(filePath) + path.sep;
             filePath = filePath.substring(filePath.indexOf(bowerDir) + bowerDir.length,
               filePath.length);
@@ -176,7 +190,13 @@ module.exports = function (gulp, $, config) {
     } else {
       return gulp.src(config.buildDir + 'index.html')
         .pipe($.wiredep.stream({
-          exclude: [/bootstrap[.]js/],
+          "overrides": {
+            "bootstrap": {
+              main: ["dist/css/bootstrap.css",
+                "dist/js/bootstrap.js"
+              ]
+            }
+          },
           ignorePath: '../../' + bowerDir.replace(/\\/g, '/'),
           fileTypes: {
             html: {
@@ -199,8 +219,12 @@ module.exports = function (gulp, $, config) {
 
   // copy Bower fonts and images into build directory
   gulp.task('bowerAssets', ['clean'], function () {
-    var assetFilter = $.filter('**/*.{eot,otf,svg,ttf,woff,woff2,gif,jpg,jpeg,png}', {restore: true});
-    return gulp.src($.mainBowerFiles(), {base: bowerDir})
+    var assetFilter = $.filter('**/*.{eot,otf,svg,ttf,woff,woff2,gif,jpg,jpeg,png}', {
+      restore: true
+    });
+    return gulp.src($.mainBowerFiles(), {
+        base: bowerDir
+      })
       .pipe(assetFilter)
       .pipe(gulp.dest(config.extDir))
       .pipe(assetFilter.restore);
@@ -208,7 +232,9 @@ module.exports = function (gulp, $, config) {
 
   // copy custom fonts into build directory
   gulp.task('fonts', ['clean'], function () {
-    var fontFilter = $.filter('**/*.{eot,otf,svg,ttf,woff,woff2}', {restore: true});
+    var fontFilter = $.filter('**/*.{eot,otf,svg,ttf,woff,woff2}', {
+      restore: true
+    });
     return gulp.src([config.appFontFiles])
       .pipe(fontFilter)
       .pipe(gulp.dest(config.buildFonts))
@@ -230,7 +256,9 @@ module.exports = function (gulp, $, config) {
 
   gulp.task('copyTemplates', ['bowerInject'], function () {
     // always copy templates to testBuild directory
-    var stream = $.streamqueue({objectMode: true});
+    var stream = $.streamqueue({
+      objectMode: true
+    });
 
     stream.queue(gulp.src([config.buildDirectiveTemplateFiles]));
 
@@ -249,14 +277,16 @@ module.exports = function (gulp, $, config) {
       .pipe(gulp.dest('tmp/' + config.buildDir))
       .on('end', function () {
         $.del([
-          config.buildDir + '*',
-          '!' + config.buildCss,
-          '!' + config.buildFonts,
-          '!' + config.buildImages,
-          '!' + config.buildJs,
-          '!' + config.extDir,
-          '!' + config.buildDir + 'index.html'
-        ], {mark: true})
+            config.buildDir + '*',
+            '!' + config.buildCss,
+            '!' + config.buildFonts,
+            '!' + config.buildImages,
+            '!' + config.buildJs,
+            '!' + config.extDir,
+            '!' + config.buildDir + 'index.html'
+          ], {
+            mark: true
+          })
           .then(function () {
             cb();
           });
