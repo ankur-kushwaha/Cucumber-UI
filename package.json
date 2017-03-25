@@ -1,13 +1,12 @@
 {
-
-
-
   "name": "cucumber-ui",
   "license": "MIT",
   "version": "1.0.0",
   "scripts": {
     "build.client": "cd client && gulp build --stage=prod",
-    "start": "cd server && node app.js"
+    "start": "cd server && node app.js",
+    "webdriverUpdate": "cd server/e2e && gulp webdriverUpdate",
+    "postinstall": "cd server/e2e && gulp webdriverUpdate"
   },
   "author": "Ankur Kushwaha<ankur.kus1@gmail.com>",
   "contributors": [
