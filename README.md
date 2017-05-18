@@ -7,6 +7,7 @@ Checkout the repository using
 
 ```
 git clone https://github.com/ankur-kushwaha/Cucumber-UI
+cd Cucumber-UI
 npm install
 npm start
 ```
