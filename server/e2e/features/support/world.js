@@ -4,7 +4,7 @@ var jsonfile = require('jsonfile');
 var _=require('lodash');
 
 function World() {
-	var runConfigFile = path.join(process.cwd()+'/run-config.json');
+	var runConfigFile = path.join('../../run-config.json');
 	var runConfig = jsonfile.readFileSync(runConfigFile);
 	var feature = runConfig.feature;
 	
@@ -18,7 +18,7 @@ function World() {
 		  return rv;
 	}
 
-	var poFile = path.join(process.cwd(),'features/'+runConfig.feature.replace(" ","_").toLowerCase()+'.json');
+	var poFile = path.join(__dirname,'../../features',runConfig.feature.replace(" ","_").toLowerCase()+'.json');
 	var po = jsonfile.readFileSync(poFile);
 	
 	po.forEach(function(pageObject){
