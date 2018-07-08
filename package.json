@@ -6,7 +6,7 @@
     "build.client": "cd client && gulp build --stage=prod",
     "start": "cd server && node app.js",
     "webdriverUpdate": "cd server/e2e && gulp webdriverUpdate",
-    "postinstall": "cd server/e2e && gulp webdriverUpdate"
+    "wdio": "wdio e2e/wdio.BUILD.conf.js"
   },
   "author": "Ankur Kushwaha<ankur.kus1@gmail.com>",
   "contributors": [
@@ -22,7 +22,10 @@
     "url": "https://github.com/ankur-kushwaha/Cucumber-UI"
   },
   "dependencies": {
+    "babel-preset-env": "~1.7.0",
+    "babel-register": "~6.26.0",
     "body-parser": "~1.13.2",
+    "chai": "~4.1.2",
     "cookie-parser": "~1.3.5",
     "debug": "~2.2.0",
     "express": "~4.13.1",
@@ -31,10 +34,14 @@
     "jsonfile": "^2.2.3",
     "morgan": "~1.6.1",
     "node-cmd": "^1.1.1",
+    "node-run-cmd": "^1.0.1",
+    "npm-run": "^5.0.1",
     "path": "^0.12.7",
     "properties-reader": "0.0.15",
     "serve-favicon": "~2.3.0",
-    "socket.io": "^1.7.2"
+    "socket.io": "^1.7.2",
+    "wdio-phantomjs-service": "~0.2.2",
+    "webdriverio": "4.13.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",
@@ -48,6 +55,22 @@
     "gulp-protractor-cucumber-html-report": "0.0.9",
     "phantomjs": "^2.1.3",
     "protractor": "^3.1.1",
-    "protractor-cucumber-framework": "^0.3.4"
+    "protractor-cucumber-framework": "^0.3.4",
+    "babel-core": "~6.26.3",
+    "babel-jest": "~23.0.1",
+    "babel-polyfill": "~6.26.0",
+    "chromedriver": "^2.40.0",
+    "eslint": "~5.0.0",
+    "eslint-config-airbnb-base": "~13.0.0",
+    "eslint-plugin-import": "~2.13.0",
+    "forever": "~0.15.3",
+    "http-server": "~0.11.0",
+    "jest": "~23.0.0",
+    "phantomjs-prebuilt": "^2.1.16",
+    "wdio-chromedriver-service": "^0.1.3",
+    "wdio-cucumber-framework": "^2.1.0",
+    "wdio-junit-reporter": "^0.4.4",
+    "wdio-selenium-standalone-service": "0.0.10",
+    "wdio-spec-reporter": "^0.1.5"
   }
 }
