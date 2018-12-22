@@ -1,3 +1,6 @@
+const path = require('path');
+const fs = require('fs');
+
 exports.config = {
     //
     // ==================
@@ -118,7 +121,14 @@ exports.config = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: http://webdriver.io/guide/testrunner/reporters.html
-    reporters: ['spec'],
+    reporters: ['spec', 'multiple-cucumber-html'],
+    reporterOptions: {
+        htmlReporter: {
+            jsonFolder: './tmp',
+            reportFolder: './reports',
+            // ... other options, see Options
+        },
+    },
     //
     // If you are using Cucumber you need to specify the location of your step
     // definitions.
@@ -154,7 +164,7 @@ exports.config = {
             './e2e/src/steps/when.js',
             // Or search a (sub)folder for JS files with a wildcard
             // works since version 1.1 of the wdio-cucumber-framework
-            //'./src/**/*.js',
+            // './src/**/*.js',
         ],
         // <string> specify a custom snippet syntax
         snippetSyntax: undefined,
@@ -168,6 +178,8 @@ exports.config = {
         tagsInTitle: false,
         // <number> timeout for step definitions
         timeout: 20000,
+        format: 'json:cucumber_report.json',
+        automaticallyGenerateReport: true,
     },
 
     //
@@ -181,8 +193,12 @@ exports.config = {
     // resolved to continue.
     //
     // Gets executed once before all workers get launched.
-    // onPrepare: function onPrepare(config, capabilities) {
-    // },
+    onPrepare: function onPrepare() {
+        const resultsJsonLocation = path.join(__dirname, 'tests_result.json');
+        if (fs.existsSync(resultsJsonLocation)) {
+            fs.unlinkSync(resultsJsonLocation);
+        }
+    },
     //
     // Gets executed before test execution begins. At this point you can access
     // all global variables, such as `browser`. It is the perfect place to

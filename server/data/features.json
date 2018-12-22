@@ -9,12 +9,12 @@
           {
             "fileName": "",
             "type": "Given",
-            "step": "I open the google.com"
+            "step": "I open the url \"http://www.google.com\""
           },
           {
             "fileName": "",
             "type": "Given",
-            "step": "the element \"#input\" is visible"
+            "step": "the title is \"Google\""
           }
         ]
       }

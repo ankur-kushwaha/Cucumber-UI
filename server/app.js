@@ -34,6 +34,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'static')));
+app.use('/e2e',express.static(path.join(__dirname, '../reports')));
 
 app.use('/', function (req, res, next) {
   //console.log(io);
