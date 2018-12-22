@@ -72,6 +72,7 @@ router.get('/run', function (req, res, next) {
 
 	nrc.run('npm run wdio -- --spec '+specs, {
 		onData: function (data) {
+			console.log(data);
 			io.emit('message', { message: "" + data });
 		},
 		onDone: function(data){
