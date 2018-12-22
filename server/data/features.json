@@ -1,50 +1,4 @@
 {
-  "Feature Name": {
-    "name": "Feature Name",
-    "description": "Testing angularjs websites",
-    "scenarios": [
-      {
-        "name": "Guide testing",
-        "steps": [
-          {
-            "fileName": "COMMON",
-            "type": "Given",
-            "step": "I go on \"http://angularjs.org\""
-          },
-          {
-            "fileName": "COMMON",
-            "type": "Given",
-            "step": "the user moved to \"Guide\""
-          },
-          {
-            "fileName": "COMMON",
-            "type": "Then",
-            "step": "the title should equal \"AngularJS: Developer Guide: Developer Guide\""
-          }
-        ]
-      },
-      {
-        "name": "Tutorial Testing",
-        "steps": [
-          {
-            "fileName": "COMMON",
-            "type": "Given",
-            "step": "I go on non-angular \"http://127.0.0.1:8080/index2.html\""
-          },
-          {
-            "fileName": "FORM",
-            "type": "Then",
-            "step": "I fill in \"firstInputBox\" with \"test\""
-          },
-          {
-            "fileName": "FORM",
-            "type": "Then",
-            "step": "I fill in \"secondTextBox\" with \"test2\""
-          }
-        ]
-      }
-    ]
-  },
   "test": {
     "name": "test",
     "description": "Feature Description",
@@ -53,84 +7,14 @@
         "name": "Scenario Name",
         "steps": [
           {
-            "fileName": "COMMON",
+            "fileName": "",
             "type": "Given",
-            "step": "I go on \"http://localhost:3000/#/register/detail/bank\""
+            "step": "I open the url \"http://www.google.com\""
           },
           {
-            "fileName": "COMMON",
+            "fileName": "",
             "type": "Given",
-            "step": "the user moved to \"BankDetails\""
-          },
-          {
-            "fileName": "FORM",
-            "type": "Then",
-            "step": "I fill in \"name\" with \"test\""
-          },
-          {
-            "fileName": "FORM",
-            "type": "Then",
-            "step": "\"submit\" should be disabled"
-          },
-          {
-            "fileName": "FORM",
-            "type": "Then",
-            "step": "I fill in \"accountNumber\" with \"1234\""
-          },
-          {
-            "fileName": "FORM",
-            "type": "Then",
-            "step": "I fill in \"confirmAccountNumber\" with \"1234\""
-          },
-          {
-            "fileName": "FORM",
-            "type": "Then",
-            "step": "I fill in \"ifscCode\" with \"AFDFD34434\""
-          },
-          {
-            "fileName": "CLICK",
-            "type": "Then",
-            "step": "User clicks on \"acceptCheckbox\""
-          },
-          {
-            "fileName": "CLICK",
-            "type": "Then",
-            "step": "User clicks on \"ifscmodal\""
-          },
-          {
-            "fileName": "FORM",
-            "type": "Given",
-            "step": "I select \"BANK 0\" from \"bankSelect\""
-          },
-          {
-            "fileName": "FORM",
-            "type": "Given",
-            "step": "I select \"CITY 0\" from \"citySelect\""
-          },
-          {
-            "fileName": "FORM",
-            "type": "Given",
-            "step": "I select \"Branch 0\" from \"branchSelect\""
-          },
-          {
-            "fileName": "CLICK",
-            "type": "Then",
-            "step": "User clicks on \"ifscCodeCheckbox\""
-          },
-          {
-            "fileName": "FORM",
-            "type": "Then",
-            "step": "\"ok\" should be enabled"
-          },
-          {
-            "fileName": "CLICK",
-            "type": "Then",
-            "step": "User clicks on \"ok\""
-          },
-          {
-            "fileName": "FORM",
-            "type": "Then",
-            "step": "\"submit\" should be enabled"
+            "step": "the title is \"Google\""
           }
         ]
       }
