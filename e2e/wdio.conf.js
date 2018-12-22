@@ -50,6 +50,10 @@ exports.config = {
         maxInstances: 5,
         //
         browserName: 'chrome',
+        chromeOptions: {
+            // to run chrome headless the following flags are required
+            // args: ['--headless', '--disable-gpu'],
+        },
     }],
     //
     // ===================
@@ -62,12 +66,19 @@ exports.config = {
     // way e.g. using promises you can set the sync option to false.
     sync: true,
     //
-    // Level of logging verbosity: silent | verbose | command | data | result |
-    // error
-    logLevel: 'error',
-    //
     // Enables colors for log output.
     coloredLogs: true,
+    //
+    // Level of logging verbosity: silent | verbose | command | data | result | error
+    logLevel: 'verbose',
+    //
+    // Warns when a deprecated command is used
+    deprecationWarnings: true,
+    //
+    // If you only want to run your tests until a specific amount
+    // of tests have failed use
+    // bail (default is 0 - don't bail, run all tests).
+    bail: 0,
     //
     // Saves a screenshot to a given path if a command fails.
     screenshotPath: './errorShots/',

@@ -50,7 +50,7 @@ router.delete('/export', function (req, res, next) {
 router.get('/run', function (req, res, next) {
 
 	// var runConfig = jsonfile.readFileSync(runConfigFile);
-	// var browser = req.query.browser;
+	var browser = req.query.browser;
 	var feature = req.query.feature;
 	// var scenarioName = req.query.scenarioName;
 
@@ -70,7 +70,7 @@ router.get('/run', function (req, res, next) {
 	// })
 	var io = req.io;
 
-	nrc.run('npm run wdio -- --spec '+specs, {
+	nrc.run([`npm run wdio -- --spec ${specs}`], {
 		onData: function (data) {
 			console.log(data);
 			io.emit('message', { message: "" + data });
